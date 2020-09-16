@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ErsaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Ersa.dbo.V_Saatler' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_Saatler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Marka" Type="nvarchar" MaxLength="50" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kordon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Renk" Type="nvarchar" MaxLength="50" />
+          <Property Name="Stok" Type="int" />
+          <Property Name="Fiyat" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityContainer Name="ErsaModelStoreContainer">
+          <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_Saatler" EntityType="Self.V_Saatler" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_Saatler].[Id] AS [Id], 
+    [V_Saatler].[Marka] AS [Marka], 
+    [V_Saatler].[Model] AS [Model], 
+    [V_Saatler].[Kordon] AS [Kordon], 
+    [V_Saatler].[Renk] AS [Renk], 
+    [V_Saatler].[Stok] AS [Stok], 
+    [V_Saatler].[Fiyat] AS [Fiyat]
+    FROM [dbo].[V_Saatler] AS [V_Saatler]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ErsaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tbl_Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="V_Saatler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Marka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kordon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Renk" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Stok" Type="Int32" />
+          <Property Name="Fiyat" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityContainer Name="ErsaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
+          <EntitySet Name="V_Saatler" EntityType="Self.V_Saatler" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ErsaModelStoreContainer" CdmEntityContainer="ErsaEntities">
+          <EntitySetMapping Name="Tbl_Admin">
+            <EntityTypeMapping TypeName="ErsaModel.Tbl_Admin">
+              <MappingFragment StoreEntitySet="Tbl_Admin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_Saatler">
+            <EntityTypeMapping TypeName="ErsaModel.V_Saatler">
+              <MappingFragment StoreEntitySet="V_Saatler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Marka" ColumnName="Marka" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Kordon" ColumnName="Kordon" />
+                <ScalarProperty Name="Renk" ColumnName="Renk" />
+                <ScalarProperty Name="Stok" ColumnName="Stok" />
+                <ScalarProperty Name="Fiyat" ColumnName="Fiyat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

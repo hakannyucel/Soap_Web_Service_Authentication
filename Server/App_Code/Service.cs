@@ -15,22 +15,21 @@ using System.Web.Services.Protocols;
 public class Service : System.Web.Services.WebService
 {
     public AuthControl Auth;
+    ErsaEntities db = new ErsaEntities();
 
     [SoapHeader("Auth")]
     [WebMethod]
-    public List<V_Saatler> saatler()
+    public void Login()
     {
-        ErsaEntities db = new ErsaEntities();
-        if (Context.Cache["Token"] != null && Context.Cache["Token"].ToString() == Auth.Token)
-        {
-            return db.V_Saatler.ToList();
-        }
-        else
-        {
-            if (!Auth.IsValid())
-                throw new SoapException("Authentication Error", SoapException.ClientFaultCode);
-            Context.Cache.Insert("Token", Auth.Token, null, DateTime.Now.AddSeconds(10), TimeSpan.Zero);
-            return db.V_Saatler.ToList();
-        }
+        if (!Auth.IsValid())
+            throw new SoapException("Authentication Error", SoapException.ClientFaultCode);
+    }
+
+    [SoapHeader("Auth")]
+    [WebMethod]
+    public List<V_Saatler> Saatler()
+    {
+        Login();
+        return db.V_Saatler.ToList();
     }
 }

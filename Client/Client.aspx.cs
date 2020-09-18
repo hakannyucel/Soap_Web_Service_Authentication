@@ -37,6 +37,7 @@ public partial class Client : System.Web.UI.Page
 
         auth.Token = handler.WriteToken(secToken);
 
-        client.saatler(auth);
+        client.Login(auth);
+        Response.Redirect("TumSaatler.aspx");
     }
 }

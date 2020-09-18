@@ -2,13 +2,26 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="saatler">
+      <s:element name="Login">
         <s:complexType />
       </s:element>
-      <s:element name="saatlerResponse">
+      <s:element name="LoginResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AuthControl" type="tns:AuthControl" />
+      <s:complexType name="AuthControl">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="Saatler">
+        <s:complexType />
+      </s:element>
+      <s:element name="SaatlerResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="saatlerResult" type="tns:ArrayOfV_Saatler" />
+            <s:element minOccurs="0" maxOccurs="1" name="SaatlerResult" type="tns:ArrayOfV_Saatler" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -28,37 +41,53 @@
           <s:element minOccurs="1" maxOccurs="1" name="Fiyat" nillable="true" type="s:decimal" />
         </s:sequence>
       </s:complexType>
-      <s:element name="AuthControl" type="tns:AuthControl" />
-      <s:complexType name="AuthControl">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
-        </s:sequence>
-        <s:anyAttribute />
-      </s:complexType>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="saatlerSoapIn">
-    <wsdl:part name="parameters" element="tns:saatler" />
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
-  <wsdl:message name="saatlerSoapOut">
-    <wsdl:part name="parameters" element="tns:saatlerResponse" />
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
-  <wsdl:message name="saatlerAuthControl">
+  <wsdl:message name="LoginAuthControl">
+    <wsdl:part name="AuthControl" element="tns:AuthControl" />
+  </wsdl:message>
+  <wsdl:message name="SaatlerSoapIn">
+    <wsdl:part name="parameters" element="tns:Saatler" />
+  </wsdl:message>
+  <wsdl:message name="SaatlerSoapOut">
+    <wsdl:part name="parameters" element="tns:SaatlerResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaatlerAuthControl">
     <wsdl:part name="AuthControl" element="tns:AuthControl" />
   </wsdl:message>
   <wsdl:portType name="ServiceSoap">
-    <wsdl:operation name="saatler">
-      <wsdl:input message="tns:saatlerSoapIn" />
-      <wsdl:output message="tns:saatlerSoapOut" />
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Saatler">
+      <wsdl:input message="tns:SaatlerSoapIn" />
+      <wsdl:output message="tns:SaatlerSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="saatler">
-      <soap:operation soapAction="http://tempuri.org/saatler" style="document" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:saatlerAuthControl" part="AuthControl" use="literal" />
+        <soap:header message="tns:LoginAuthControl" part="AuthControl" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Saatler">
+      <soap:operation soapAction="http://tempuri.org/Saatler" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SaatlerAuthControl" part="AuthControl" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
@@ -67,11 +96,21 @@
   </wsdl:binding>
   <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="saatler">
-      <soap12:operation soapAction="http://tempuri.org/saatler" style="document" />
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:saatlerAuthControl" part="AuthControl" use="literal" />
+        <soap12:header message="tns:LoginAuthControl" part="AuthControl" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Saatler">
+      <soap12:operation soapAction="http://tempuri.org/Saatler" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SaatlerAuthControl" part="AuthControl" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
